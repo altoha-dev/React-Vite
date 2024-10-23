@@ -1,28 +1,19 @@
-import { FC } from 'react';
-import { Button } from '../shared/ui/Button';
+import { FC } from "react";
+import { Button } from "../shared/ui/Button";
+import { Typography } from "../shared/ui/Typography";
+import { COLOR_TEXT } from "../shared/ui/color";
 
 export const Header: FC = function Header() {
-  const hanlePress = () => {
-    console.log('click');
-  };
   return (
-    <header className="bg-blue-500 h-40">
-      <Button onClick={hanlePress}>{'default'}</Button>
-      <Button onClick={hanlePress} mode="dark">
-        {'dark'}
-      </Button>
-      <Button onClick={hanlePress} mode="border">
-        {'border'}
-      </Button>
-
-      <h5 className="text-black ">
-        Zagollovok
-        <p className="bg-slate-500">opisanie</p>
-      </h5>
-      <button onClick={hanlePress} className="text-white bg-black">
-        {' '}
-        {'aboba'}
-      </button>
+    <header className="bg-blue-500 py-3">
+      <Typography
+        color={COLOR_TEXT.alternative}
+        size={20}
+        align={"center"}
+        weight={700}
+      >
+        {"Список товаров в корзине "}
+      </Typography>
     </header>
   );
 };

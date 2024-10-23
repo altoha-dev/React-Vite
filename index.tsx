@@ -1,10 +1,14 @@
-import { StrictMode } from 'react';
+import React from 'react';
 import { createRoot } from 'react-dom/client';
-import App from './App.tsx';
 import './src/app/styles/index.css';
+import { RouterProvider, createRouter } from '@tanstack/react-router';
+import { routeTree } from './src/routeTree.gen'; // Убедись, что путь корректен
+
+// Создаем маршрутизатор
+const router = createRouter({ routeTree });
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>,
 );
