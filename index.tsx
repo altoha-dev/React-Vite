@@ -5,7 +5,7 @@ import { RouterProvider, createRouter } from '@tanstack/react-router';
 import { routeTree } from './src/routeTree.gen'; // Убедись, что путь корректен
 
 // Создаем маршрутизатор
-const router = createRouter({ routeTree });
+export const router = createRouter({ routeTree });
 
 createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
