@@ -2,30 +2,46 @@ import { TextField } from "@mui/material";
 import { FC } from "react";
 import { Controller, Form, useForm } from "react-hook-form";
 import { Button } from "../../shared/ui/Button";
+import { useNotes } from "./store/NotesProvider";
+import { useRouter } from "@tanstack/react-router";
+import { Note } from "./model/Note";
+import { useUnit } from "effector-react";
+import { addNote, updateNote } from "./store/NoteStore";
 
-interface Props {}
+interface Props {
+  note?: Note;
+}
 type Form = {
   title: string;
   description: string;
 };
-export const NoteForm: FC<Props> = function NoteForm() {
+export const NoteForm: FC<Props> = function NoteForm(props) {
+  const [addNoteFn, updateNoteFn] = useUnit([addNote,updateNote])
+  const { history } = useRouter();
+
   const {
     handleSubmit,
     control,
     formState: { isValid },
   } = useForm<Form>({
     defaultValues: {
-      title: "",
-      description: "",
+      title: props.note?.title ?? "",
+      description: props.note?.description ?? "",
     },
   });
 
   return (
     <form
-      onSubmit={handleSubmit((form) => {
-        console.log(form);
-      })}
       className="flex flex-col gap-3"
+      onSubmit={handleSubmit((form) => {
+        if (props.note) {
+          updateNoteFn({ id: props.note.id, ...form });
+        } else {
+          addNoteFn(form);
+        }
+
+        history.back();
+      })}
     >
       <Controller
         name="title"
@@ -67,7 +83,7 @@ export const NoteForm: FC<Props> = function NoteForm() {
         )}
       ></Controller>
       <Button disabled={!isValid} type="submit" className="w-full">
-        {"Добавить"}
+        {props.note ? "Сохранить" : "Добавить"}
       </Button>
     </form>
   );
